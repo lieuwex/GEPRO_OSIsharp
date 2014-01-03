@@ -1,7 +1,7 @@
-GEPRI_OSIsharp
+GEPRO_OSIsharp
 ==============
 
-C# Library voor Gepri-OSI roosters.
+C# Library voor Gepro-OSI roosters.
 
 GEBRUIK
 ==============
@@ -15,7 +15,7 @@ INHOUD
 ==============
 MagisterRooster:
 
-  /// Vraagt rooster van Gepri-Osi op.
+  /// Vraagt rooster van Gepro-Osi op.
   
   public static List<List<Lesuur>> GetRooster(uint SchoolID, string UserName, string Afdeling)
   
