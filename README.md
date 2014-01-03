@@ -6,9 +6,9 @@ C# Library voor Gepri-OSI roosters.
 GEBRUIK
 ==============
 Voeg gewoon reference toe en zet dan
-'''c#
-using GEPRI_OSIsharp;
-'''
+
+    using GEPRI_OSIsharp;
+
 boven aan je bestand.
 
 INHOUD
