@@ -7,7 +7,7 @@ GEBRUIK
 ==============
 Voeg gewoon reference toe en zet dan
 
-    using GEPRI_OSIsharp;
+    using GEPRO_OSIsharp;
 
 boven aan je bestand.
 
