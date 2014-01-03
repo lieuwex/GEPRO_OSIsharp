@@ -15,7 +15,7 @@ INHOUD
 ==============
 MagisterRooster:
 
-Vraat rooster van Gepro-Osi op:
+Vraag rooster van Gepro-Osi op:
 ```csharp
 public static List<List<Lesuur>> GetRooster(uint SchoolID, string UserName, string Afdeling)
 ```
