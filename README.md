@@ -23,15 +23,15 @@ Filter de opgegeven rooster en haal alleen de opgegeven dag eruit:
 ```csharp
 public static List<Lesuur> GetByDay(List<List<Lesuur>> Rooster, DayOfWeek Dag)
 ```
-Filter de opgegeven rooster en haal alleen de opgegeven dagen eruit
+Filter de opgegeven rooster en haal alleen de opgegeven dagen eruit:
 ```csharp
 public static List<List<Lesuur>> GetByDays(List<List<Lesuur>> Rooster, List<DayOfWeek> Dagen)
 ```
-Krijg dag als DayOfWeek van dagNummer.
+Krijg dag als DayOfWeek van dagNummer:
 ```csharp
 public static DayOfWeek getDay(int dayNumber)
 ```
-Vraag de afdelingen op.
+Vraag de afdelingen op:
 ```csharp
 public static List<string> GetAfdelingen(uint SchoolID)
 ```
