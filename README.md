@@ -6,11 +6,11 @@ C# Library voor Gepro-OSI roosters.
 GEBRUIK
 ==============
 Voeg gewoon reference toe en zet dan
-
-using GEPRO_OSIsharp;
 ```csharp
-boven aan je bestand.
+using GEPRO_OSIsharp;
 ```
+boven aan je bestand.
+
 INHOUD
 ==============
 MagisterRooster:
