@@ -58,10 +58,10 @@ namespace GEPRI_OSIsharp
 
                     if (!isChanged)
                     {
-                        if (!lessonRaw.Any(n => n.InnerHtml == "" && lessonRaw.IndexOf(n) != 3))
+                        if (!lessonRaw.Any(n => n.InnerHtml == "" && lessonRaw.IndexOf(n) != 3)) //Controleerd of de docent en het klaslokaal niet leeg is
                             tmpDay.Add(new Lesuur(SchoolID, lessonRaw[0].InnerHtml, lessonRaw[1].InnerHtml, lessonRaw[2].InnerHtml, lessonRaw[3].InnerHtml, schoolhour, day));
                         else
-                            tmpDay.Add(null); //Style issues, you know them. (should also give slight speed bonus :D)
+                            tmpDay.Add(new Lesuur()); //should  give slight speed bonus :D
                     }
 
                     else
