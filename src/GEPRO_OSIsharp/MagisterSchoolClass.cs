@@ -94,7 +94,6 @@ namespace GEPRI_OSIsharp
             this.isGewijzigd = true;
             this.Orgineel = new Lesuur();
             this.Orgineel.Klaslokaal = originalClassRoom;
-            this.Orgineel.Klaslokaal = classRoom;
             this.Orgineel.Dag = getDay(day);
             this.Orgineel.Uur = Uur;
             this.Orgineel.Klas = new Klas()
@@ -121,6 +120,14 @@ namespace GEPRI_OSIsharp
                 case 4: return DayOfWeek.Friday;
                 default: return DayOfWeek.Monday;
             }
+        }
+
+        public bool IsEmpty()
+        {
+            if (this.Vak != null || this.Klas != null || this.Orgineel != null)
+                return true;
+            else
+                return false;
         }
     }
 

@@ -31,7 +31,7 @@ namespace GEPRI_OSIsharpTEST
             {
                 foreach(var lesuur in day)
                 {
-                    if (lesuur != null) Console.WriteLine("Dag: " + lesuur.Dag + ", Uur: " + lesuur.Uur + ":   " + lesuur.Vak.Naam);
+                    if (!lesuur.IsEmpty()) Console.WriteLine("Dag: " + lesuur.Dag + ", Uur: " + lesuur.Uur + ":   " + lesuur.Vak.Naam);
                 }
             }
 
@@ -41,7 +41,7 @@ namespace GEPRI_OSIsharpTEST
             {
                 foreach (var lesuur in day)
                 {
-                    if (lesuur != null) Console.WriteLine("Uur: " + lesuur.Uur + ":   " + lesuur.Vak.Naam);
+                    if (!lesuur.IsEmpty()) Console.WriteLine("Uur: " + lesuur.Uur + ":   " + lesuur.Vak.Naam);
                 }
             }
 

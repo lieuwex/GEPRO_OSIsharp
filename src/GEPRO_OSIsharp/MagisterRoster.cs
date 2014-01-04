@@ -54,7 +54,7 @@ namespace GEPRI_OSIsharp
                     var lessonRaw = lessonsRaw.ToList()[schoolhour].ToList()[day].ToList();
                     var originalLessonRaw = originalLessonsRaw.ToList()[schoolhour].ToList()[day].ToList();
 
-                    bool isChanged = lessonRaw[0].OuterHtml == "<td align=\"left\" width=\"31\" class=\"tableCellNew\">" + lessonRaw[0].InnerHtml + "</td>";
+                    bool isChanged = lessonRaw[0].Attributes[2].Value == "tableCellNew";
 
                     if (!isChanged)
                     {
