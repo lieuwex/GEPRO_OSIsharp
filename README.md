@@ -1,7 +1,7 @@
 GEPRO_OSIsharp
 ==============
 
-C# Library voor Gepro-OSI roosters.
+C# Library voor Gepro-OSI roosters. Zou te gebruiken moeten zijn met elke school.
 
 Zie, voor een PHP implementatie: https://github.com/stipmonster/api-for-magister-gepro-osi-roosters
 
