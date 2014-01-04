@@ -47,7 +47,7 @@ namespace GEPRI_OSIsharpTEST
 
             var linqTest = new List<List<Lesuur>>();
             foreach(var dag in rooster)
-                linqTest.Add(dag.Where(x => x != null && x.isGewijzigd == true).ToList()); //LINQ enabled :)
+                linqTest.Add(dag.Where(x => (!x.IsEmpty()) && x.isGewijzigd == true).ToList()); //LINQ enabled :)
 
             Console.ReadLine();
         }

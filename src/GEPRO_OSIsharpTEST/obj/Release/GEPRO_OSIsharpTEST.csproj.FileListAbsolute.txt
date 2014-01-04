@@ -10,8 +10,6 @@ C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRI_OSIsharp\GEPRI_OSIsh
 C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\bin\Release\Gepro.osi.Sharp_TEST.exe.config
 C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\bin\Release\Gepro.osi.Sharp_TEST.exe
 C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\bin\Release\Gepro.osi.Sharp_TEST.pdb
-C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\bin\Release\Gepro.osi.Sharp_TEST.exe.CodeAnalysisLog.xml
-C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\bin\Release\Gepro.osi.Sharp_TEST.exe.lastcodeanalysissucceeded
 C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\bin\Release\GEPRI_OSIsharp.dll
 C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\bin\Release\HtmlAgilityPack.dll
 C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\bin\Release\GEPRI_OSIsharp.pdb
