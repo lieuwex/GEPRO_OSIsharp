@@ -31,7 +31,7 @@ namespace GEPRI_OSIsharpTEST
             {
                 foreach(var lesuur in day)
                 {
-                    if (!lesuur.IsEmpty()) Console.WriteLine("Dag: " + lesuur.Dag + ", Uur: " + lesuur.Uur + ":   " + lesuur.Vak.Naam);
+                    if (!lesuur[0].IsEmpty()) Console.WriteLine("Dag: " + lesuur[0].Dag + ", Uur: " + lesuur[0].Uur + ":   " + lesuur[0].Vak.Naam);
                 }
             }
 
@@ -39,15 +39,15 @@ namespace GEPRI_OSIsharpTEST
             Console.WriteLine("Vandaag:");
             foreach (var day in rooster)
             {
-                foreach (var lesuur in day)
+                for (int i = 0; i < day.Count; i++ )
                 {
-                    if (!lesuur.IsEmpty()) Console.WriteLine("Uur: " + lesuur.Uur + ":   " + lesuur.Vak.Naam);
+                    if (!day[i].Any(x => x.IsEmpty())) Console.WriteLine("Uur: " + day[i][0].Uur + ":   " + day[i][0].Vak.Naam);
                 }
             }
 
             var linqTest = new List<List<Lesuur>>();
-            foreach(var dag in rooster)
-                linqTest.Add(dag.Where(x => (!x.IsEmpty()) && x.isGewijzigd == true).ToList()); //LINQ enabled :)
+            foreach (var dag in rooster)
+                linqTest.Add(dag.Where(x => x.Any(y => !y.IsEmpty()) && x.Any(y => y.isGewijzigd == true)).ToList()[0]); //LINQ enabled :)
 
             Console.ReadLine();
         }

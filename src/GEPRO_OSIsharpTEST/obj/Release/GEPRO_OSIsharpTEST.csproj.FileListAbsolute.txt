@@ -16,3 +16,5 @@ C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsh
 C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\obj\Release\GEPRO_OSIsharpTEST.csprojResolveAssemblyReference.cache
 C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\obj\Release\Gepro.osi.Sharp_TEST.exe
 C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\obj\Release\Gepro.osi.Sharp_TEST.pdb
+C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\bin\Release\Gepro.osi.Sharp_TEST.exe.CodeAnalysisLog.xml
+C:\Users\Lieuwe\Documents\Visual Studio 2013\Projects\GEPRO_OSIsharp\GEPRO_OSIsharpTEST\bin\Release\Gepro.osi.Sharp_TEST.exe.lastcodeanalysissucceeded

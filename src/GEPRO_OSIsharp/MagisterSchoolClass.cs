@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using HtmlAgilityPack;
 
 namespace GEPRI_OSIsharp
@@ -36,7 +37,7 @@ namespace GEPRI_OSIsharp
 
             this.Uur = hour + 1;
 
-            if (!checkedClassTypes.Any(x => x.Key == className))
+            if (!checkedClassTypes.Any(x => x.Key == className+teacherCode))
             {
 
                 string URL = "http://publish.gepro-osi.nl/roosters/rooster.php?docenten=" + teacherCode + "&type=Docentrooster&wijzigingen=1&school=" + schoolID;
@@ -46,42 +47,46 @@ namespace GEPRI_OSIsharp
                 var upperNode = doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/table[1]/tr[2]/td[1]/table[4]/tr[1]/td[3]");
                 if (upperNode.ChildNodes.Count == 1) throw new HtmlWebException("Error in request. Is the URL legal?");
                 //weird errors, so i had to make the code waaaay less readable. fuck.
-                var teacherLessonsRaw = new List<IEnumerable<IEnumerable<HtmlNode>>>();
-                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[6]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))); }
+                var teacherLessonsRaw = new List<IEnumerable<IEnumerable<IEnumerable<HtmlNode>>>>();
+                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[6]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")))); }
                 catch { teacherLessonsRaw.Add(null); }
-                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[7]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))); }
+                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[7]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")))); }
                 catch { teacherLessonsRaw.Add(null); }
-                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[8]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))); }
+                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[8]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")))); }
                 catch { teacherLessonsRaw.Add(null); }
-                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[9]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))); }
+                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[9]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")))); }
                 catch { teacherLessonsRaw.Add(null); }
-                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[10]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))); }
+                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[10]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")))); }
                 catch { teacherLessonsRaw.Add(null); }
-                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[11]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))); }
+                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[11]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")))); }
                 catch { teacherLessonsRaw.Add(null); }
-                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[12]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))); }
+                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[12]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")))); }
                 catch { teacherLessonsRaw.Add(null); }
-                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[13]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))); }
+                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[13]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")))); }
                 catch { teacherLessonsRaw.Add(null); }
-                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[14]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))); }
+                try { teacherLessonsRaw.Add(upperNode.SelectSingleNode("table[1]/tr[14]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")))); }
                 catch { teacherLessonsRaw.Add(null); }
 
-                List<HtmlNode> teacherLessonRaw;
-                try { teacherLessonRaw = teacherLessonsRaw[hour].ToList()[day].ToList(); }
+                StringBuilder sb = new StringBuilder();
+                try {
+                    foreach (var les in teacherLessonsRaw[hour-1].ElementAt(day))
+                        sb.Append(les.ElementAt(0).InnerHtml);
+                    if (sb.ToString().Count() == teacherLessonsRaw[hour].ElementAt(day).Count() - 1) sb.Append("/");
+                }
                 catch { return; }
                 this.Klas = new Klas()
                 {
-                    Naam = teacherLessonRaw[0].InnerHtml,
+                    Naam = sb.ToString(),
                     ClusterID = subGroupID,
                     MentorCode = null
                 };
-                checkedClassTypes.Add(this.Vak.Naam, teacherLessonRaw[0].InnerHtml);
+                checkedClassTypes.Add(this.Vak.Naam+teacherCode, sb.ToString());
             }
             else
             {
                 this.Klas = new Klas()
                 {
-                    Naam = checkedClassTypes[this.Vak.Naam],
+                    Naam = checkedClassTypes[this.Vak.Naam+teacherCode],
                     ClusterID = subGroupID,
                     MentorCode = null
                 };

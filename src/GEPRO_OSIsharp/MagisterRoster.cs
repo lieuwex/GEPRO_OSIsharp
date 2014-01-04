@@ -18,7 +18,7 @@ namespace GEPRI_OSIsharp
         /// <param name="Afdeling"><para>De afdelingen van de gebruiker om rooster van op te vragen</para>
         /// <para>Tip: Gebruik MagisterRoster.GetAfdelingen(uint) om de afdelingen op te halen.</para></param>
         /// <returns>List van dagen in een List van uren wat de lesuren bevat. </returns>
-        public static List<List<Lesuur>> GetRooster(uint SchoolID, string UserName, string Afdeling)
+        public static List<List<List<Lesuur>>> GetRooster(uint SchoolID, string UserName, string Afdeling)
         {
             #region GetLessons
             string URL = "http://publish.gepro-osi.nl/roosters/rooster.php?leerling=" + UserName + "&type=Leerlingrooster&afdeling=" + Afdeling + "&wijzigingen=1&school=" + SchoolID;
@@ -42,30 +42,45 @@ namespace GEPRI_OSIsharp
             var originalLessonsRaw = StripTable(upperNode);
             #endregion
 
-            var finalList = new List<List<Lesuur>>();
+            var finalList = new List<List<List<Lesuur>>>();
             for(int day = 0; day < 5; day++)
             { //Every day
 
-                var tmpDay = new List<Lesuur>();
+                var tmpDay = new List<List<Lesuur>>();
 
                 for (int schoolhour = 0; schoolhour < 9; schoolhour++)
                 { //Every schoolhour
 
-                    var lessonRaw = lessonsRaw.ToList()[schoolhour].ToList()[day].ToList();
+                    var lessonRaw = lessonsRaw.ElementAt(schoolhour).ToList()[day].ToList();
                     var originalLessonRaw = originalLessonsRaw.ToList()[schoolhour].ToList()[day].ToList();
 
-                    bool isChanged = lessonRaw[0].Attributes[2].Value == "tableCellNew";
+                    bool isChanged = lessonRaw[0].Any(x => x.Attributes[2].Value == "tableCellNew");
 
                     if (!isChanged)
                     {
-                        if (!lessonRaw.Any(n => n.InnerHtml == "" && lessonRaw.IndexOf(n) != 3)) //Controleerd of de docent en het klaslokaal niet leeg is
-                            tmpDay.Add(new Lesuur(SchoolID, lessonRaw[0].InnerHtml, lessonRaw[1].InnerHtml, lessonRaw[2].InnerHtml, lessonRaw[3].InnerHtml, schoolhour, day));
+                        if (!lessonRaw.Any(n => n.Any(z => z.InnerHtml == "" && lessonRaw.IndexOf(n) != 3))) //Controleerd of de docent en het klaslokaal niet leeg is
+                        {
+                            var tmpHour = new List<Lesuur>();
+
+                            foreach (var lesson in lessonRaw)
+                                tmpHour.Add(new Lesuur(SchoolID, lesson.ElementAt(0).InnerHtml, lesson.ElementAt(1).InnerHtml, lesson.ElementAt(2).InnerHtml, lesson.ElementAt(3).InnerHtml, schoolhour, day));
+                            
+                            tmpDay.Add(tmpHour);
+                        }
+
                         else
-                            tmpDay.Add(new Lesuur()); //should  give slight speed bonus :D
+                            tmpDay.Add(new List<Lesuur>()); //should give slight speed bonus :D
                     }
 
                     else
-                        tmpDay.Add(new Lesuur(SchoolID, lessonRaw[0].InnerHtml, lessonRaw[1].InnerHtml, lessonRaw[2].InnerHtml, lessonRaw[3].InnerHtml, schoolhour, day, originalLessonRaw[0].InnerHtml, originalLessonRaw[1].InnerHtml, originalLessonRaw[2].InnerHtml, originalLessonRaw[3].InnerHtml));
+                    {
+                        var tmpHour = new List<Lesuur>();
+
+                        for (int i = 0; i < lessonRaw.Count; i++ )
+                            tmpHour.Add(new Lesuur(SchoolID, lessonRaw[i].ElementAt(0).InnerHtml, lessonRaw[i].ElementAt(1).InnerHtml, lessonRaw[i].ElementAt(2).InnerHtml, lessonRaw[i].ElementAt(3).InnerHtml, schoolhour, day, originalLessonRaw[i].ElementAt(0).InnerHtml, originalLessonRaw[i].ElementAt(1).InnerHtml, originalLessonRaw[i].ElementAt(2).InnerHtml, originalLessonRaw[i].ElementAt(3).InnerHtml));
+
+                        tmpDay.Add(tmpHour);
+                    }
                 }
 
                 finalList.Add(tmpDay);
@@ -80,7 +95,7 @@ namespace GEPRI_OSIsharp
         /// <param name="Rooster">De rooster om uit te filteren.</param>
         /// <param name="Dag">De dag om op te vragen.</param>
         /// <returns>Lijst met lesuren van de gevraagde dag</returns>
-        public static List<Lesuur> GetByDay(List<List<Lesuur>> Rooster, DayOfWeek Dag)
+        public static List<List<Lesuur>> GetByDay(List<List<List<Lesuur>>> Rooster, DayOfWeek Dag)
         {
             switch(Dag)
             {
@@ -117,20 +132,20 @@ namespace GEPRI_OSIsharp
             return finalList;
         }
 
-        internal static List<IEnumerable<IEnumerable<HtmlNode>>> StripTable(HtmlNode upperNode)
+        internal static List<IEnumerable<IEnumerable<IEnumerable<HtmlNode>>>> StripTable(HtmlNode upperNode)
         {
-            return new List<IEnumerable<IEnumerable<HtmlNode>>>()
+            return new List<IEnumerable<IEnumerable<IEnumerable<HtmlNode>>>>()
             {
                 // UNREADBLE PART INBOUND
-                upperNode.SelectSingleNode("table[1]/tr[6]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")),
-                upperNode.SelectSingleNode("table[1]/tr[7]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")),
-                upperNode.SelectSingleNode("table[1]/tr[8]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")),
-                upperNode.SelectSingleNode("table[1]/tr[9]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")),
-                upperNode.SelectSingleNode("table[1]/tr[10]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")),
-                upperNode.SelectSingleNode("table[1]/tr[11]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")),
-                upperNode.SelectSingleNode("table[1]/tr[12]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")),
-                upperNode.SelectSingleNode("table[1]/tr[13]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")),
-                upperNode.SelectSingleNode("table[1]/tr[14]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList()[0].ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))
+                upperNode.SelectSingleNode("table[1]/tr[6]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))),
+                upperNode.SelectSingleNode("table[1]/tr[7]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))),
+                upperNode.SelectSingleNode("table[1]/tr[8]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))),
+                upperNode.SelectSingleNode("table[1]/tr[9]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))),
+                upperNode.SelectSingleNode("table[1]/tr[10]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))),
+                upperNode.SelectSingleNode("table[1]/tr[11]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))),
+                upperNode.SelectSingleNode("table[1]/tr[12]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))),
+                upperNode.SelectSingleNode("table[1]/tr[13]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp"))),
+                upperNode.SelectSingleNode("table[1]/tr[14]").ChildNodes.Where(x => x.Name == "td" && x.ChildNodes.Count == 2).Select(x => x.ChildNodes.Where(y => y.Name == "table").ToList()[0].ChildNodes.Where(z => z.Name == "tr").ToList().Select(b => b.ChildNodes.Where(a => a.Name == "td" && a.InnerHtml != "&nbsp")))
             };
         }
 
