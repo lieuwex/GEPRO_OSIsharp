@@ -11,11 +11,11 @@ namespace GEPRI_OSIsharp
     public partial class MagisterRooster
     {
         /// <summary>
-        /// Vraagt rooster van Gepro-Osi op.
+        /// <para>Vraagt rooster van Gepro-Osi op.</para>
         /// </summary>
         /// <param name="SchoolID">De school om rooster van op te vragen.</param>
         /// <param name="UserName">De gebruikers-naam op het rooster van op te vragen.</param>
-        /// <param name="Department"><para>De afdelingen van de gebruiker om rooster van op te vragen</para>
+        /// <param name="Afdeling"><para>De afdelingen van de gebruiker om rooster van op te vragen</para>
         /// <para>Tip: Gebruik MagisterRoster.GetAfdelingen(uint) om de afdelingen op te halen.</para></param>
         /// <returns>List van dagen in een List van uren wat de lesuren bevat. </returns>
         public static List<List<Lesuur>> GetRooster(uint SchoolID, string UserName, string Afdeling)

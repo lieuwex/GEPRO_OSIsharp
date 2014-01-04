@@ -12,7 +12,21 @@ namespace GEPRI_OSIsharpTEST
     {
         static void Main(string[] args)
         {
-            var rooster = MagisterRooster.GetRooster(181,"120678","4V");
+            Console.WriteLine("School ID? :");
+            uint schoolID = Convert.ToUInt32(Console.ReadLine());
+            Console.WriteLine("Naam/Leerlingnummer? :");
+            string userName = Console.ReadLine();
+
+            var afdelingen = MagisterRooster.GetAfdelingen(schoolID);
+
+            for (int i = 0; i < afdelingen.Count; i++)
+                Console.WriteLine(i + " " + afdelingen[i]);
+
+            var afdeling = afdelingen[Convert.ToInt32(Console.ReadLine())];
+
+            Console.ForegroundColor = ConsoleColor.Green; Console.Clear();
+
+            var rooster = MagisterRooster.GetRooster(schoolID, userName, afdeling);
             foreach(var day in rooster)
             {
                 foreach(var lesuur in day)
