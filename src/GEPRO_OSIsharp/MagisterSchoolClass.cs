@@ -130,9 +130,9 @@ namespace GEPRI_OSIsharp
         public bool IsEmpty()
         {
             if (this.Vak != null || this.Klas != null || this.Orgineel != null)
-                return true;
-            else
                 return false;
+            else
+                return true;
         }
     }
 
