@@ -5,6 +5,8 @@ C# Library voor Gepro-OSI roosters. Zou te gebruiken moeten zijn met elke school
 
 Zie, voor een PHP implementatie: https://github.com/stipmonster/api-for-magister-gepro-osi-roosters
 
+Voor de geintereseerden, zie: https://github.com/lieuwex/MataSharp
+
 GEBRUIK
 ==============
 Voeg gewoon reference toe en zet dan
