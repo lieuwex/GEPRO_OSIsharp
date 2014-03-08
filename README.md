@@ -3,6 +3,8 @@ GEPRO_OSIsharp
 
 C# Library voor Gepro-OSI roosters. Zou te gebruiken moeten zijn met elke school.
 
+Voor een gezellig praatje join: irc.geekshed.net @ channel #magister
+
 Zie, voor een PHP implementatie: https://github.com/stipmonster/api-for-magister-gepro-osi-roosters
 
 Voor de geintereseerden, zie: https://github.com/lieuwex/MataSharp
