@@ -7,7 +7,7 @@ Voor een gezellig praatje join: irc.geekshed.net @ channel #magister
 
 Zie, voor een PHP implementatie: https://github.com/stipmonster/api-for-magister-gepro-osi-roosters
 
-Voor de geintereseerden, zie: https://github.com/lieuwex/MataSharp
+Voor de geintereseerden, zie: http://simplygits.github.io/MagisterJS/
 
 GEBRUIK
 ==============
